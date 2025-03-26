@@ -19,7 +19,9 @@ This application fetches data from an API, stores it in SQLite, and exports it a
           "hostHeaderInfo": {
               "affiliateCode": "Your Affiliate",
               "departmentName": "Your Department Name",
-              "requester": "Your Name"
+              "requester": "Your Name",
+              "startDate": "2025-03-01",
+              "startDate": "2025-03-31"
           }
       }
   }

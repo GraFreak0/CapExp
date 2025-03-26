@@ -65,7 +65,7 @@ def store_data(data):
     insert_query = f"INSERT INTO transactions ({', '.join(column_names)}) VALUES ({placeholders})"
 
     for record in records:
-        values = [str(record.get(col, '')) for col in column_names]  # Use .get(col, '') to handle missing keys
+        values = [str(record.get(col, '')) for col in column_names]
         cursor.execute(insert_query, values)
 
     conn.commit()
