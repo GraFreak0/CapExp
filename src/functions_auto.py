@@ -1,16 +1,22 @@
 import os
 import json
 import sqlite3
+import calendar
 import requests
 import pandas as pd
-from datetime import datetime
 from config_handler import get_credentials, get_api_url
+from datetime import datetime, timedelta
 
-# API Handler: Fetch Data
 def fetch_data():
     username, password = get_credentials()
     url = get_api_url()
     
+    # Get the first and last day of the previous month
+    today = datetime.today()
+    first_day_last_month = (today.replace(day=1) - timedelta(days=1)).replace(day=1).strftime("%Y-%m-%d")
+    last_day_last_month = today.replace(day=1) - timedelta(days=1)
+    last_day_last_month = last_day_last_month.strftime("%Y-%m-%d")
+
     headers = {"Content-Type": "application/json"}
     payload = {
         "data": {
@@ -18,8 +24,8 @@ def fetch_data():
                 "affiliateCode": "ENG",
                 "departmentName": "Enterprise Report and Business Intelligence Team",
                 "requester": "Johnson Isaiah",
-                "startDate" : "2025-02-01",
-                "endDate" : "2025-03-31",
+                "startDate": first_day_last_month,
+                "endDate": last_day_last_month,
             }
         }
     }
