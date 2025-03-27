@@ -1,4 +1,4 @@
-from functions_auto import fetch_data, export_to_excel
+from functions import fetch_data, export_to_excel
 
 def main():
     """Main function to fetch data and prompt for export."""

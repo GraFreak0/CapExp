@@ -15,11 +15,11 @@ def fetch_data():
     payload = {
         "data": {
             "hostHeaderInfo": {
-                "affiliateCode": "ENG",
-                "departmentName": "Enterprise Report and Business Intelligence Team",
-                "requester": "Johnson Isaiah",
-                "startDate" : "2025-02-01",
-                "endDate" : "2025-03-31",
+            "affiliateCode": "ENG",
+            "departmentName": "Enterprise Report and Business Intelligence Team",
+            "requester": "Johnson Isaiah",
+            "startDate" : "2025-01-01",
+            "endDate" : "2025-01-31"
             }
         }
     }
@@ -89,7 +89,7 @@ def get_output_path(filename):
 
 def export_to_excel():
     conn = sqlite3.connect('temp_data.db')
-    df = pd.read_sql_query("SELECT * FROM transactions", conn)
+    df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
     file_path = get_output_path("data.xlsx")
     df.to_excel(file_path, index=False)
     conn.close()
