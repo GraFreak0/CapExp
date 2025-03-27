@@ -61,15 +61,26 @@ def store_data(data):
     create_table_query = f"CREATE TABLE IF NOT EXISTS transactions ({columns_def})"
     cursor.execute(create_table_query)
 
+     # Create a temporary table to store new records
+    cursor.execute("CREATE TEMP TABLE temp_transactions AS SELECT * FROM transactions WHERE 1=0")
     placeholders = ", ".join(["?" for _ in column_names])
-    insert_query = f"INSERT INTO transactions ({', '.join(column_names)}) VALUES ({placeholders})"
-
+    insert_query = f"INSERT INTO temp_transactions ({', '.join(column_names)}) VALUES ({placeholders})"
+        
     for record in records:
-        values = [str(record.get(col, '')) for col in column_names]
+        values = tuple(str(record.get(col, '')) for col in column_names)
         cursor.execute(insert_query, values)
-
+        
+    # Insert only unique records
+    condition = " AND ".join([f"t.{col} = temp_transactions.{col}" for col in column_names])
+    merge_query = f"""
+        INSERT INTO transactions ({', '.join(column_names)})
+        SELECT * FROM temp_transactions
+        WHERE NOT EXISTS (
+            SELECT 1 FROM transactions t WHERE {condition}
+        )
+    """
+    cursor.execute(merge_query)
     conn.commit()
-    conn.close()
 
 def get_output_path(filename):
     current_date = datetime.now()
@@ -93,7 +104,7 @@ from datetime import datetime, timedelta
 
 def export_to_excel():
     conn = sqlite3.connect('temp_data.db')
-    df = pd.read_sql_query("SELECT * FROM transactions", conn)
+    df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
 
     today = datetime.today()
     flMth = today.replace(day=1) - timedelta(days=1)
