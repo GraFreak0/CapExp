@@ -10,7 +10,7 @@ from config_handler import get_prod_credentials, get_prod_api_url
 def fetch_data(start_date, end_date, affiliate_code, department_name, requester):
     username, password = get_prod_credentials()
     url = get_prod_api_url()
-    print(url)
+    # print(url)
     
     headers = {"Content-Type": "application/json"}
     # if not start_date:

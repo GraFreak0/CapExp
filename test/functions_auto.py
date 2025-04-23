@@ -9,7 +9,7 @@ from config_handler import get_credentials, get_api_url
 def fetch_data():
     username, password = get_credentials()
     url = get_api_url()
-    print(url)
+    # print(url)
     
     # Get the first and last day of the previous month
     today = datetime.today()
