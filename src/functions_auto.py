@@ -100,8 +100,6 @@ def get_output_path(filename):
     
     return file_path
 
-from datetime import datetime, timedelta
-
 def export_to_excel():
     conn = sqlite3.connect('temp_data.db')
     df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
