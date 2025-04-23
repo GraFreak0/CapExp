@@ -4,11 +4,11 @@ import sqlite3
 import requests
 import pandas as pd
 from datetime import datetime
-from config_handler import get_credentials, get_api_url
+from config_handler import get_prod_credentials, get_prod_api_url
 
-def fetch_data(start_date=None, end_date=None):
-    username, password = get_credentials()
-    url = get_api_url()
+def fetch_data(start_date, end_date, affiliate_code, department_name, requester):
+    username, password = get_prod_credentials()
+    url = get_prod_api_url()
     print(url)
     
     headers = {"Content-Type": "application/json"}
@@ -19,9 +19,9 @@ def fetch_data(start_date=None, end_date=None):
     payload = {
         "data": {
             "hostHeaderInfo": {
-            "affiliateCode": "ENG",
-            "departmentName": "Enterprise Report and Business Intelligence Team",
-            "requester": "Johnson Isaiah",
+            "affiliateCode": affiliate_code,
+            "departmentName": department_name,
+            "requester": requester,
             "startDate" : start_date,
             "endDate" : end_date
             }
@@ -92,7 +92,7 @@ def get_output_path(filename):
     return file_path
 
 def export_to_excel():
-    conn = sqlite3.connect('temp_data.db')
+    conn = sqlite3.connect('temp_data_prod.db')
     df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
     file_path = get_output_path("data.xlsx")
     df.to_excel(file_path, index=False)

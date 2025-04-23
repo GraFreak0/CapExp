@@ -4,28 +4,27 @@ import sqlite3
 import calendar
 import requests
 import pandas as pd
-from config_handler import get_credentials, get_api_url
 from datetime import datetime, timedelta
+from config_handler import get_prod_credentials, get_prod_api_url
 
-def fetch_data():
-    username, password = get_credentials()
-    url = get_api_url()
+def fetch_data(start_date, end_date, affiliate_code, department_name, requester):
+    username, password = get_prod_credentials()
+    url = get_prod_api_url()
     print(url)
     
-    # Get the first and last day of the previous month
-    today = datetime.today()
-    first_day_last_month = (today.replace(day=1) - timedelta(days=1)).replace(day=1).strftime("%Y-%m-%d")
-    last_day_last_month = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m-%d")
-
     headers = {"Content-Type": "application/json"}
+    # if not start_date:
+    #     start_date = "2025-03-01"
+    # if not end_date:
+    #     end_date = "2025-03-31"
     payload = {
         "data": {
             "hostHeaderInfo": {
-            "affiliateCode": "ENG",
-            "departmentName": "Enterprise Report and Business Intelligence Team",
-            "requester": "Johnson Isaiah",
-            "startDate": first_day_last_month,
-            "endDate": last_day_last_month
+            "affiliateCode": affiliate_code,
+            "departmentName": department_name,
+            "requester": requester,
+            "startDate": start_date,
+            "endDate": end_date
             }
         }
     }
@@ -101,7 +100,7 @@ def get_output_path(filename):
     return file_path
 
 def export_to_excel():
-    conn = sqlite3.connect('temp_data.db')
+    conn = sqlite3.connect('temp_data_prod.db')
     df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
 
     today = datetime.today()

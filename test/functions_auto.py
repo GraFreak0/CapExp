@@ -5,7 +5,6 @@ import calendar
 import requests
 import pandas as pd
 from config_handler import get_credentials, get_api_url
-from datetime import datetime, timedelta
 
 def fetch_data():
     username, password = get_credentials()
@@ -18,6 +17,10 @@ def fetch_data():
     last_day_last_month = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m-%d")
 
     headers = {"Content-Type": "application/json"}
+    # if not start_date:
+    #     start_date = "2025-03-01"
+    # if not end_date:
+    #     end_date = "2025-03-31"
     payload = {
         "data": {
             "hostHeaderInfo": {
