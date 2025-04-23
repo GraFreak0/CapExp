@@ -7,7 +7,7 @@ last_day_last_month = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m
 
 def main():
     print("Fetching data from API...")
-    start_date = "2025-01-01"
+    start_date = first_day_last_month
     end_date = today.strftime("%Y-%m-%d")
     affiliate_code = "ENG"
     department_name = "Enterprise Report and Business Intelligence Team"
