@@ -36,10 +36,10 @@ def store_data(data):
 
     # Handle different response formats
     if isinstance(data, list):  
-        records = data
+        records = data  # Direct list of records
     elif isinstance(data, dict):
-        records = data.get("data", [])
-        if isinstance(records, dict):
+        records = data.get("data", [])  # Extract list from "data"
+        if isinstance(records, dict):  # Handle nested structure like {"transactions": [...]}
             records = records.get("transactions", [])
     else:
         print("Unexpected API response format.")
@@ -90,6 +90,6 @@ def get_output_path(filename):
 def export_to_excel():
     conn = sqlite3.connect('temp_data.db')
     df = pd.read_sql_query("SELECT DISTINCT * FROM transactions", conn)
-    file_path = get_output_path("data.xlsx")
+    file_path = get_output_path("test_data.xlsx")
     df.to_excel(file_path, index=False)
     conn.close()
