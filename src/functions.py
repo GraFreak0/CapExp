@@ -12,10 +12,10 @@ def fetch_data(start_date, end_date, affiliate_code, department_name, requester)
     # print(url)
     
     headers = {"Content-Type": "application/json"}
-    if not start_date:
-        start_date = "2025-03-01"
-    if not end_date:
-        end_date = "2025-03-31"
+    # if not start_date:
+    #     start_date = "2025-03-01"
+    # if not end_date:
+    #     end_date = "2025-03-31"
     payload = {
         "data": {
             "hostHeaderInfo": {

@@ -1,7 +1,7 @@
 from configparser import ConfigParser
 
 def get_credentials():
-    """Reads API credentials from config/config.properties."""
+    """Reads API credentials from config/config-test.properties."""
     config = ConfigParser()
     config.read('config/config-test.properties')
     username = config.get('testAPI', 'username')
