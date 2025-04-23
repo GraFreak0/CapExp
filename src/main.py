@@ -1,9 +1,12 @@
-from functions_auto import fetch_data, export_to_excel
+from functions import fetch_data, export_to_excel
 
 def main():
     """Main function to fetch data and prompt for export."""
     print("Fetching data from API...")
-    fetch_data()
+    # Example date range, can be modified or made dynamic
+    start_date = "2025-03-01"
+    end_date = "2025-03-31"
+    fetch_data(start_date=start_date, end_date=end_date)
     print("Data successfully fetched and stored in SQLite.")
     export_to_excel()
     print("Data exported to data.xlsx")

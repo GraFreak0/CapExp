@@ -10,12 +10,12 @@ from datetime import datetime, timedelta
 def fetch_data():
     username, password = get_credentials()
     url = get_api_url()
+    print(url)
     
     # Get the first and last day of the previous month
     today = datetime.today()
     first_day_last_month = (today.replace(day=1) - timedelta(days=1)).replace(day=1).strftime("%Y-%m-%d")
-    last_day_last_month = today.replace(day=1) - timedelta(days=1)
-    last_day_last_month = last_day_last_month.strftime("%Y-%m-%d")
+    last_day_last_month = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m-%d")
 
     headers = {"Content-Type": "application/json"}
     payload = {

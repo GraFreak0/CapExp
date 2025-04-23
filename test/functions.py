@@ -7,19 +7,24 @@ from datetime import datetime
 from config_handler import get_credentials, get_api_url
 
 # API Handler: Fetch Data
-def fetch_data():
+def fetch_data(start_date=None, end_date=None):
     username, password = get_credentials()
     url = get_api_url()
+    print(url)
     
     headers = {"Content-Type": "application/json"}
+    if not start_date:
+        start_date = "2025-03-01"
+    if not end_date:
+        end_date = "2025-03-31"
     payload = {
         "data": {
             "hostHeaderInfo": {
             "affiliateCode": "ENG",
             "departmentName": "Enterprise Report and Business Intelligence Team",
             "requester": "Johnson Isaiah",
-            "startDate" : "2025-01-01",
-            "endDate" : "2025-01-31"
+            "startDate" : start_date,
+            "endDate" : end_date
             }
         }
     }
